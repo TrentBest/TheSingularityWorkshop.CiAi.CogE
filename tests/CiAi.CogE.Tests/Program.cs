@@ -17,7 +17,8 @@ Require(snapshot.Edges[0].State == "succeeded", "validated known state should be
 Require(snapshot.Edges[0].EvidenceUrl is not null, "validated HTTPS evidence link should be projected");
 Require(snapshot.Edges[1].State == "unknown" && snapshot.Edges[1].EvidenceUrl is null, "unvalidated claims must become unknown and lose evidence link");
 Require(snapshot.Edges[2].State == "stale" && snapshot.Edges[2].StatusText.Contains("Not verified"), "stale evidence must not imply readiness");
-Require(snapshot.Nodes.Single(n => n.Id == "TrentBest/HeadlessAi").State == "unknown", "stale/unvalidated observations must not promote node readiness");
+var untrustedOnly = TopologyProjector.Project(catalog, new[] { new OperationObservation("req-2", "TrentBest/CiAi", "TrentBest/HeadlessAi", "publish.package", "succeeded", "Untrusted claimed success", "https://example.com/fake", false), new OperationObservation("req-3", "TrentBest/CiAi", "TrentBest/HeadlessAi", "observe.status", "stale", "Old observation", "https://github.com/TrentBest/HeadlessAi/actions/runs/99", true) });
+Require(untrustedOnly.Nodes.Single(n => n.Id == "TrentBest/HeadlessAi").State == "unknown", "stale/unvalidated observations alone must not promote node readiness");
 var duplicateRejected = false;
 try { TopologyProjector.Project(catalog.Concat(new[] { catalog[0] }), Array.Empty<OperationObservation>()); }
 catch (ArgumentException) { duplicateRejected = true; }
