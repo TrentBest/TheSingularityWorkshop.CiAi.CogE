@@ -1,7 +1,24 @@
 # CiAi.CogE — GUI-Ready Topology Projection
 
-**Mission:** presentation-neutral view model for a future directed repository graph in GUI.SVG/GUI.Blazor.
+**Mission:** transform a repository catalog and host-supplied operation observations into a presentation-neutral directed graph model. CogE is not a GUI framework and does not fetch CI state.
 
-Read [the inter-repository model](https://github.com/TrentBest/TheSingularityWorkshop.CiAi/blob/development/docs/INTER_REPOSITORY_MODEL.md) and [Cog assignments](https://github.com/TrentBest/TheSingularityWorkshop.CiAi/blob/development/docs/COG_ASSIGNMENTS.md). Project catalog plus validated evidence into nodes and directional edges. Labels explain what is supplied, consumed, requested, or notified. Status includes readable text and evidence links; unknown/stale evidence must not make a provider appear ready.
+## 01 — See it in a minute
 
-Do not create a new GUI framework or invent backend state. UI must not bypass host authorization. Work only on development; do not edit siblings/master. Deliver tests, UML, README, readiness percentage, and evidence.
+Requires the .NET 8 SDK.
+
+    dotnet build src/CiAi.CogE/CiAi.CogE.csproj --configuration Release
+    dotnet run --project tests/CiAi.CogE.Tests/CiAi.CogE.Tests.csproj --configuration Release
+
+Offline checks cover known catalog nodes, directional edges, validated evidence links, unvalidated claims, stale observations, and duplicate catalog identities.
+
+## 02 — Projection contract
+
+The input catalog supplies repository identity, display label, and role. Each operation observation supplies request identity, source/target, operation, state, status text, evidence URL, and an explicit host-set EvidenceValidated flag. Unknown or unvalidated claims project as unknown; unvalidated evidence links are omitted. Stale evidence is labeled not verified and does not itself promote a node's readiness.
+
+## 03 — Trust boundary
+
+CogE performs no network calls and does not verify GitHub runs. It cannot independently establish that EvidenceValidated is truthful: only CiAi should set that flag after fetching and validating authoritative provider data. GUI.SVG/GUI.Blazor rendering, live catalog loading, shared CogB/CogC types, graph history, and event wiring remain future integration work.
+
+## 04 — Status
+
+**Readiness: 20%.** Pure projection prototype with offline checks; not connected to the GUI or live CI. See [READINESS.md](docs/READINESS.md).
