@@ -19,6 +19,7 @@ public sealed record LifecycleObservation
         SourceIdentity = Token(sourceIdentity, nameof(sourceIdentity));
         if (digest is not null && (digest.Length != 64 || !digest.All(Uri.IsHexDigit)))
             throw new ArgumentException("Digest must be a full SHA-256 hexadecimal value.", nameof(digest));
+        if (!Enum.IsDefined(fact)) throw new ArgumentOutOfRangeException(nameof(fact));
         Fact = fact;
         ObservedAt = observedAt;
         Digest = digest?.ToLowerInvariant();
