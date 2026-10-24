@@ -21,9 +21,15 @@ CogE projects timestamped observations for an exact request and artifact version
 - Reclamation is not inferred from acknowledgement.
 - No network access, persistence, or execution.
 
+## Gallery
+
+See [Gallery.md](Gallery.md) for the quick tour and verification recipe.
+
 ## 04 — UML and use case
 
 See [LifecycleProjector UML and use case](docs/UML/LifecycleProjectorUML.md).
+
+See [LifecycleProjector class companion](src/TheSingularityWorkshop.CiAi.CogE/LifecycleProjector.md).
 
 ## 05 — Release status
 
