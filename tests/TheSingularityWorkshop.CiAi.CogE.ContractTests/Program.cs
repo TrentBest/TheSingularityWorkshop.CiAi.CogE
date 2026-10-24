@@ -1,0 +1,14 @@
+using TheSingularityWorkshop.CiAi.CogE;
+var passed = 0;
+var now = DateTimeOffset.Parse("2026-10-24T00:00:00Z");
+Check("facts remain distinct and timeline is ordered", () => { var p = LifecycleProjector.Project("r1","a1","v1",[Obs(LifecycleFact.Published, now.AddMinutes(2)), Obs(LifecycleFact.Requested, now), Obs(LifecycleFact.Retrieved, now.AddMinutes(3))]); Assert(p.Has(LifecycleFact.Published) && p.Has(LifecycleFact.Retrieved) && !p.Has(LifecycleFact.Accepted), "facts collapsed into success"); Assert(p.Observations[0].Fact == LifecycleFact.Requested, "timeline not sorted"); });
+Check("mismatched identities are excluded with diagnostics", () => { var p = LifecycleProjector.Project("r1","a1","v1",[Obs(LifecycleFact.Published,now), new LifecycleObservation("other","a1","v1",LifecycleFact.Accepted,now,"client")]); Assert(p.Observations.Count == 1 && p.Diagnostics.Contains("requestId.mismatch"), "mismatch not diagnosed"); });
+Check("integrity is not inferred as retrieval", () => { var p = LifecycleProjector.Project("r1","a1","v1",[Obs(LifecycleFact.IntegrityVerified,now)]); Assert(!p.Has(LifecycleFact.Retrieved) && p.Diagnostics.Contains("integrity-without-retrieval"), "invalid sequence was hidden"); });
+Check("acceptance and reclamation prerequisites are diagnosed", () => { var p = LifecycleProjector.Project("r1","a1","v1",[Obs(LifecycleFact.Accepted,now),Obs(LifecycleFact.Reclaimed,now.AddMinutes(1))]); Assert(p.Diagnostics.Contains("accepted-without-local-validation") && p.Diagnostics.Contains("reclaimed-without-acknowledgement"), "missing prerequisites not diagnosed"); });
+Check("contradictory failure and acceptance remain visible", () => { var p = LifecycleProjector.Project("r1","a1","v1",[Obs(LifecycleFact.Failed,now),Obs(LifecycleFact.Accepted,now.AddMinutes(1)),Obs(LifecycleFact.LocallyValidated,now)]); Assert(p.Has(LifecycleFact.Failed) && p.Has(LifecycleFact.Accepted) && p.Diagnostics.Contains("accepted-and-failed"), "contradiction hidden"); });
+Check("invalid digest is rejected", () => Throws<ArgumentException>(() => new LifecycleObservation("r1","a1","v1",LifecycleFact.Published,now,"provider","bad")));
+Console.WriteLine($"PASS: {passed} CogE contract checks.");
+void Check(string name, Action action) { action(); passed++; Console.WriteLine($"PASS {passed}: {name}"); }
+LifecycleObservation Obs(LifecycleFact fact, DateTimeOffset at) => new("r1","a1","v1",fact,at,"provider",new string('a',64));
+static void Assert(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); }
+static void Throws<TException>(Action action) where TException : Exception { try { action(); } catch (TException) { return; } throw new InvalidOperationException($"Expected {typeof(TException).Name}."); }
