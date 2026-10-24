@@ -2,6 +2,10 @@
 
 **Mission:** transform a repository catalog and host-supplied operation observations into a presentation-neutral directed graph model. CogE is not a GUI framework and does not fetch CI state.
 
+## Documentation
+
+See [TopologyProjector UML and use case](docs/UML/TopologyProjectorUML.md) for the projection model and evidence trust boundary.
+
 ## 01 — See it in a minute
 
 Requires the .NET 8 SDK.
