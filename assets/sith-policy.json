@@ -1,0 +1,17 @@
+{
+  "repository": "TrentBest/TheSingularityWorkshop.CiAi.CogE",
+  "policy": "exactly-master-and-development",
+  "required_branches": [
+    "development",
+    "master"
+  ],
+  "actual_branches": [
+    "development",
+    "master"
+  ],
+  "branch_count": 2,
+  "status": "COMPLIANT",
+  "evaluated_at": "2026-11-05T04:25:18Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.CiAi.CogE/actions/runs/41967687510",
+  "triggering_commit": "36ddcf36c335f6b2aa59940f7ea2fedb54cb2281"
+}
