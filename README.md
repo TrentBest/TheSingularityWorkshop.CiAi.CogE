@@ -1,5 +1,6 @@
 # CiAi.CogE — GUI-Ready Topology Projection
 
+[![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.CiAi.CogE/actions/workflows/sith-policy.yml)
 **Mission:** transform a repository catalog and host-supplied operation observations into a presentation-neutral directed graph model. CogE is not a GUI framework and does not fetch CI state.
 
 ## Documentation
