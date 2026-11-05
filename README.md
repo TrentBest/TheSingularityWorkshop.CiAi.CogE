@@ -1,5 +1,7 @@
 # The Singularity Workshop CiAi.CogE
 
+[![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.CiAi.CogE/actions/workflows/sith-policy.yml)
+
 **CogE projects lifecycle evidence for people and downstream automation.** It shows what is proven, what is missing, and where observations conflict; it never upgrades an unknown state into success.
 
 ## 01 — See it in a minute
