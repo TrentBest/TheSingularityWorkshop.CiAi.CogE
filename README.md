@@ -9,7 +9,7 @@ See [TopologyProjector UML and use case](docs/UML/TopologyProjectorUML.md) for t
 
 ## 01 — See it in a minute
 
-Requires the .NET 8 SDK.
+Requires the .NET 10 SDK.
 
     dotnet build src/CiAi.CogE/CiAi.CogE.csproj --configuration Release
     dotnet run --project tests/CiAi.CogE.Tests/CiAi.CogE.Tests.csproj --configuration Release
